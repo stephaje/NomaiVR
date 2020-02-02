@@ -25,6 +25,18 @@ namespace NomaiVR {
             } else if (scene == OWScene.TitleScreen) {
                 var animatedTitle = GameObject.Find("TitleCanvasHack").GetComponent<Canvas>();
                 animatedTitle.renderMode = RenderMode.ScreenSpaceOverlay;
+			}
+            ScreenCanvasesToWorld();
+			
+            if (isInGame) {
+                FixGameCanvases(new[] {
+                    new CanvasInfo(CanvasTypes.PauseMenu, 0.0005f),
+                    new CanvasInfo(CanvasTypes.DialogueCanvas),
+                    new CanvasInfo(CanvasTypes.ScreenPromptCanvas, 0.0015f)
+                });
+				
+            if (SceneManager.GetActiveScene().name == "SolarSystem") {
+                GlobalMessenger.AddListener("WakeUp", OnWakeUp);
 
                 var animatedTitleChild = animatedTitle.transform.GetChild(0).GetComponent<RectTransform>();
                 animatedTitleChild.anchorMax = Vector2.one * 0.5f;
